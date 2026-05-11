@@ -1,0 +1,17 @@
+- name : Hello World deploy
+  hosts: all
+  become: yes
+  tasks:
+    - name: nginx setup
+      dnf: 
+        name: nginx
+        state: present
+    - name: Create web page
+      copy:
+        content: "<h1>Hello World from GitHub action</h1>"
+        dest: /usr/share/nginx/html/index.html
+    - name: start nginx
+      ansible.builtin.service:
+        name: nginx
+        state: started
+        enabled: yes
